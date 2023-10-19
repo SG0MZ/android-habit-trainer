@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.habittrainer.db.HabitDbTable
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         rv.setHasFixedSize(true)
 
         rv.layoutManager = LinearLayoutManager(this)
-        rv.adapter = HabitsAdapter(getSampleHabits())
+        rv.adapter = HabitsAdapter(HabitDbTable(this).readAllHabits())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

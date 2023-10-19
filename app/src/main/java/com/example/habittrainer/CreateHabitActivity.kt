@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import com.example.habittrainer.db.HabitDbTable
 import java.io.IOException
 
 class CreateHabitActivity : AppCompatActivity() {
@@ -35,7 +36,18 @@ class CreateHabitActivity : AppCompatActivity() {
             return
         }
 
-        tv_error.visibility = View.INVISIBLE
+        val title = et_title.text.toString()
+        val description = et_descr.text.toString()
+        val habit = Habit(title,description,imageBitmap!!)
+
+        val id = HabitDbTable(this).store(habit)
+
+        if (id == -1L) {
+            displayErrorMessage("Habit could not be stored...")
+        } else {
+            val intent = Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun displayErrorMessage(message: String) {
